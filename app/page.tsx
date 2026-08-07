@@ -6,6 +6,7 @@ import { Windows } from './sections/Windows';
 import { Form } from './sections/Form';
 import { Footer } from './sections/Footer';
 import { CookieBanner } from './components/CookieBanner';
+import { StickyCTA } from './components/StickyCTA';
 
 export default function Home() {
   return (
@@ -21,6 +22,7 @@ export default function Home() {
       <div className="bg-white">
         <Footer />
       </div>
+      <StickyCTA />
       <CookieBanner />
     </>
   );

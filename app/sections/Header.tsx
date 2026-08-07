@@ -28,6 +28,7 @@ export function Header() {
     let lastScrollY = window.scrollY;
 
     const onScroll = () => {
+      if (open) return;
       const currentY = window.scrollY;
       if (currentY > lastScrollY && currentY > 60) {
         setHidden(true);
@@ -39,7 +40,7 @@ export function Header() {
 
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [open]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -127,7 +128,10 @@ export function Header() {
           </div>
 
           <button
-            onClick={() => setOpen(!open)}
+            onClick={() => {
+              setOpen(!open);
+              setHidden(false);
+            }}
             className="p-2 transition-transform duration-300 active:scale-95 lg:hidden"
             aria-label="Открыть меню"
             aria-expanded={open}
@@ -152,8 +156,10 @@ export function Header() {
                   }`}
                   onClick={(e) => {
                     e.preventDefault();
-                    handleNavClick(item.href);
                     setOpen(false);
+                    setTimeout(() => {
+                      document.getElementById(item.href.slice(1))?.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
                   }}
                 >
                   {item.label}
