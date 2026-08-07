@@ -56,8 +56,8 @@ export const metadata: Metadata = {
   creator: 'Clean Inc',
   publisher: 'Clean Inc',
   other: {
-    'yandex-verification': '',
-    'google-site-verification': '',
+    'yandex-verification': '633bc30c73d8eedc',
+    'google-site-verification': 'Nsn6Q9i2c24TlyY2vn-Z5riGdB-6m9QYos67S7GW5hA',
   },
 };
 
