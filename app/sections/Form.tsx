@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Container } from '../components/Container';
 import { assets } from '@/lib/assets';
 
@@ -28,8 +28,40 @@ const contacts = [
 export function Form() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [service, setService] = useState('');
+  const [services, setServices] = useState<string[]>([]);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const [errors, setErrors] = useState<{ name?: string; phone?: string; service?: string }>({});
+
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onClick);
+    return () => document.removeEventListener('mousedown', onClick);
+  }, []);
+
+  const serviceOptions = [
+    { value: 'general', label: 'Генеральная уборка' },
+    { value: 'support', label: 'Поддерживающая уборка' },
+    { value: 'space', label: 'Организация пространства' },
+    { value: 'repair', label: 'Уборка после ремонта' },
+    { value: 'chemical', label: 'Химчистка' },
+    { value: 'windows', label: 'Мойка окон' },
+  ];
+
+  const toggleService = (value: string) => {
+    setServices((prev) =>
+      prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]
+    );
+  };
+
+  const selectedLabels = services
+    .map((v) => serviceOptions.find((o) => o.value === v)?.label)
+    .filter(Boolean)
+    .join(', ');
 
   const validate = () => {
     const newErrors: typeof errors = {};
@@ -41,8 +73,8 @@ export function Form() {
     if (phoneDigits.length !== 11) {
       newErrors.phone = 'Телефон должен содержать 11 цифр';
     }
-    if (!service) {
-      newErrors.service = 'Выберите тип услуги';
+    if (services.length === 0) {
+      newErrors.service = 'Выберите хотя бы одну услугу';
     }
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -122,43 +154,54 @@ export function Form() {
             </div>
 
             <div className="space-y-2">
-              <label htmlFor="service" className="text-base font-medium text-dark-gray sm:text-lg">
+              <label className="text-base font-medium text-dark-gray sm:text-lg">
                 Тип услуги
               </label>
-              <div className="relative">
-                <select
-                  id="service"
-                  name="service"
-                  value={service}
-                  onChange={(e) => setService(e.target.value)}
-                  className={`w-full appearance-none rounded-2xl bg-white px-4 py-4 text-sm text-[#3A3A3A] outline-none sm:px-5 sm:text-base lg:px-6 lg:py-5 ${
+              <input type="hidden" name="service" value={selectedLabels} />
+              <div className="relative" ref={dropdownRef}>
+                <button
+                  type="button"
+                  onClick={() => setDropdownOpen(!dropdownOpen)}
+                  className={`flex w-full items-center justify-between rounded-2xl bg-white px-4 py-4 text-sm text-[#3A3A3A] outline-none sm:px-5 sm:text-base lg:px-6 lg:py-5 ${
                     errors.service ? 'ring-2 ring-red-500' : ''
                   }`}
                 >
-                  <option value="" disabled>
-                    Выберите услугу
-                  </option>
-                  <option value="general">Генеральная уборка</option>
-                  <option value="support">Поддерживающая уборка</option>
-                  <option value="space">Организация пространства</option>
-                  <option value="repair">Уборка после ремонта</option>
-                  <option value="chemical">Химчистка</option>
-                  <option value="windows">Мойка окон</option>
-                </select>
+                  <span className={selectedLabels ? '' : 'text-[#808080]'}>
+                    {selectedLabels || 'Выберите услугу'}
+                  </span>
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={`h-2 w-3 shrink-0 text-[#808080] transition-transform ${dropdownOpen ? 'rotate-180' : ''}`}
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
                 {errors.service && (
                   <p className="text-sm text-red-500">{errors.service}</p>
                 )}
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="pointer-events-none absolute right-6 top-1/2 h-2 w-3 -translate-y-1/2 text-[#808080]"
-                >
-                  <polyline points="6 9 12 15 18 9" />
-                </svg>
+                {dropdownOpen && (
+                  <div className="absolute z-30 mt-2 w-full rounded-2xl bg-white p-2 shadow-lg ring-1 ring-black/5">
+                    {serviceOptions.map((option) => (
+                      <label
+                        key={option.value}
+                        className="flex cursor-pointer items-center gap-3 rounded-xl px-3 py-3 text-sm text-[#3A3A3A] transition-colors hover:bg-light-bg sm:text-base"
+                      >
+                        <input
+                          type="checkbox"
+                          checked={services.includes(option.value)}
+                          onChange={() => toggleService(option.value)}
+                          className="h-4 w-4 shrink-0 accent-brand"
+                        />
+                        {option.label}
+                      </label>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
