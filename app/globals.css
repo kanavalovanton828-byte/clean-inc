@@ -15,6 +15,7 @@ html {
   body {
     @apply bg-white text-black antialiased md:bg-light-bg;
     color-scheme: light only;
+    overflow-x: hidden;
   }
 
   * {
