@@ -35,11 +35,11 @@ export const metadata: Metadata = {
       'Уборка квартир, химчистка диванов, мойка окон в Перми. Выезд на следующий день. Заказ от 4000 ₽.',
     type: 'website',
     locale: 'ru_RU',
-    url: 'https://clean-inc-perm.netlify.app',
+    url: 'https://startling-griffin-dd9bd7.netlify.app',
     siteName: 'Clean Inc — клининг в Перми',
   },
   alternates: {
-    canonical: 'https://clean-inc-perm.netlify.app',
+    canonical: 'https://startling-griffin-dd9bd7.netlify.app',
   },
   robots: {
     index: true,
@@ -78,7 +78,7 @@ export default function RootLayout({
     name: 'Clean Inc — клининг в Перми',
     description:
       'Клининговая компания в Перми: уборка квартир и домов, генеральная уборка, уборка после ремонта, химчистка диванов и мебели, мойка окон.',
-    url: 'https://clean-inc-perm.netlify.app',
+    url: 'https://startling-griffin-dd9bd7.netlify.app',
     telephone: '+79082402525',
     priceRange: 'от 4000 ₽',
     areaServed: {

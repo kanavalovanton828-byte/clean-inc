@@ -7,5 +7,5 @@ Allow: /
 User-agent: Googlebot
 Allow: /
 
-Host: https://clean-inc-perm.netlify.app
-Sitemap: https://clean-inc-perm.netlify.app/sitemap.xml
+Host: https://startling-griffin-dd9bd7.netlify.app
+Sitemap: https://startling-griffin-dd9bd7.netlify.app/sitemap.xml
