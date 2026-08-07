@@ -1,0 +1,35 @@
+{
+  "name": "clean-inc",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "npx -y serve@latest dist -l 3000",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14.2.30",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "framer-motion": "^11.3.0",
+    "lucide-react": "^0.460.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.0",
+    "@radix-ui/react-slot": "^1.1.0",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^20.14.0",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "tailwindcss": "^3.4.17",
+    "postcss": "^8.4.47",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^14.2.30",
+    "sharp": "^0.33.5"
+  }
+}

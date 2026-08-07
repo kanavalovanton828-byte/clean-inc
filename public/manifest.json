@@ -1,0 +1,17 @@
+{
+  "name": "Clean Inc — клининг в Перми",
+  "short_name": "Clean Inc",
+  "description": "Клининговая компания в Перми: уборка квартир, химчистка, мойка окон",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#5A30F0",
+  "lang": "ru",
+  "icons": [
+    {
+      "src": "/assets/Logo.png",
+      "sizes": "any",
+      "type": "image/png"
+    }
+  ]
+}
