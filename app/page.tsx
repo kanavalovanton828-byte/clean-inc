@@ -5,6 +5,7 @@ import { Chemical } from './sections/Chemical';
 import { Windows } from './sections/Windows';
 import { Form } from './sections/Form';
 import { Footer } from './sections/Footer';
+import { CookieBanner } from './components/CookieBanner';
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
       <div className="bg-white">
         <Footer />
       </div>
+      <CookieBanner />
     </>
   );
 }
