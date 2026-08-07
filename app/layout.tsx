@@ -121,6 +121,7 @@ export default function RootLayout({
   return (
     <html lang="ru" className={inter.variable}>
       <head>
+        <meta name="color-scheme" content="light only" />
         <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/assets/VkladkaLogo.png" type="image/png" />
         <link rel="apple-touch-icon" href="/assets/VkladkaLogo.png" />

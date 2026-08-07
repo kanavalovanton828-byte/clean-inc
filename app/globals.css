@@ -4,11 +4,27 @@
 
 :root {
   --font-inter: 'Inter', sans-serif;
-  color-scheme: light;
+  color-scheme: light only;
+}
+
+html {
+  color-scheme: light only;
 }
 
 @layer base {
   body {
     @apply bg-white text-black antialiased md:bg-light-bg;
+    color-scheme: light only;
+  }
+
+  * {
+    color-scheme: light only;
+  }
+
+  input,
+  textarea,
+  select {
+    color-scheme: light only;
+    background-color: white;
   }
 }
