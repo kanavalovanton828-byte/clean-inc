@@ -80,10 +80,48 @@ export function Form() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    (e.target as HTMLFormElement).submit();
+    setSubmitting(true);
+    setSubmitError(false);
+    try {
+      const token = '8797959717:AAFAgb8wt0PtbKmB6JZC1w5B1IcHRKzkoYw';
+      const chatId = '1752423900';
+      const message = [
+        '<b>Новая заявка с сайта Clean Inc</b>',
+        '',
+        `<b>Имя:</b> ${name}`,
+        `<b>Телефон:</b> ${phone}`,
+        `<b>Услуги:</b> ${selectedLabels}`,
+      ].join('\n');
+
+      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: message,
+          parse_mode: 'HTML',
+        }),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+        setName('');
+        setPhone('');
+        setServices([]);
+      } else {
+        setSubmitError(true);
+      }
+    } catch {
+      setSubmitError(true);
+    }
+    setSubmitting(false);
   };
 
   return (
@@ -103,13 +141,9 @@ export function Form() {
           </div>
 
           <form
-            name="contact"
-            method="POST"
-            data-netlify="true"
             onSubmit={handleSubmit}
             className="space-y-5 rounded-[24px] bg-light-bg p-5 sm:space-y-6 sm:rounded-[28px] sm:p-6 lg:rounded-[32px] lg:p-10"
           >
-            <input type="hidden" name="form-name" value="contact" />
 
             <div className="grid gap-4 sm:gap-5 lg:grid-cols-2">
               <div className="space-y-2">
@@ -213,12 +247,24 @@ export function Form() {
                 </a>
                 .
               </p>
-              <button
-                type="submit"
-                className="w-full rounded-[28px] bg-brand transition-colors hover:bg-[#3100de] px-5 py-4 text-base font-medium text-white sm:rounded-[32px] sm:py-5 sm:text-lg lg:rounded-[36px] lg:py-5"
-              >
-                Отправить заявку
-              </button>
+              {submitted ? (
+                <div className="w-full rounded-[28px] bg-green-50 px-5 py-4 text-center text-base font-medium text-green-600 whitespace-nowrap sm:rounded-[32px] sm:py-5 sm:text-lg lg:rounded-[36px]">
+                  Свяжемся с вами в течение дня
+                </div>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="w-full rounded-[28px] bg-brand transition-colors hover:bg-[#3100de] px-5 py-4 text-base font-medium text-white disabled:opacity-60 sm:rounded-[32px] sm:py-5 sm:text-lg lg:rounded-[36px] lg:py-5"
+                >
+                  {submitting ? 'Отправка...' : 'Отправить заявку'}
+                </button>
+              )}
+              {submitError && (
+                <p className="text-center text-sm text-red-500">
+                  Ошибка отправки. Попробуйте позже или позвоните нам.
+                </p>
+              )}
             </div>
           </form>
 
