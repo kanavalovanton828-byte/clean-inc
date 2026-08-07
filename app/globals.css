@@ -4,6 +4,7 @@
 
 :root {
   --font-inter: 'Inter', sans-serif;
+  color-scheme: light;
 }
 
 @layer base {
